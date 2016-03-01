@@ -1,6 +1,6 @@
 # Docker image for mailsac
 FROM centos:6
-MAINTAINER Junfeng Wu wujunfeng@gmail.com
+MAINTAINER Junfeng Wu
 
 # Update
 RUN yum -y upgrade
