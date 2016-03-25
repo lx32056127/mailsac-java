@@ -1,5 +1,5 @@
 # Docker image for mailsac
-FROM centos:6
+FROM centos:latest
 MAINTAINER Junfeng Wu
 
 # Update
@@ -31,7 +31,7 @@ RUN sed -i "s/change-this/`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | 
 RUN sed -i "s/\"normal_smtp_opts\": {/\"normal_smtp_opts\": {\n        \"disableDNSValidation\": true,/g" /opt/mailsac/config/default.json
 RUN npm install /opt/mailsac
 
-# Entry point
+# Log rotation
 RUN echo $'/var/log/mailsac.log {\n\
     weekly\n\
     rotate 26\n\
@@ -42,7 +42,9 @@ RUN echo $'/var/log/mailsac.log {\n\
     delaycompress\n\
 }\n\
 ' > /etc/logrotate.d/mailsac
-ENTRYPOINT service mongod start && service redis start && cd /opt/mailsac && npm start >> /var/log/mailsac.log 2>&1  && tail -F /var/log/mailsac.log
+
+# Entry point
+ENTRYPOINT /etc/init.d/mongod start && /etc/init.d/redis start && cd /opt/mailsac && npm start >> /var/log/mailsac.log 2>&1  && tail -F /var/log/mailsac.log
 EXPOSE 25
 EXPOSE 587
 EXPOSE 3000
