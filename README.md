@@ -3,10 +3,9 @@ A mailsac client written by Java
 
 
 # 构建
-docker build mailsac .
+docker build -t mailsac .
 
 #启动前工作
-
 killall sendmail
 /etc/init.d/postfix stop
 chkconfig --level 2345 postfix off
