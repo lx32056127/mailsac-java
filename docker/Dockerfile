@@ -25,7 +25,7 @@ RUN yum -y install nodejs
 
 # Mailsac
 RUN yum -y install git
-RUN git clone https://github.com/ruffrey/mailsac.git /opt/mailsac
+RUN git clone https://github.com/lx32056127/mailsac.git /opt/mailsac
 RUN sed -i "s/definitely-change-this/`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`/g" /opt/mailsac/config/default.json
 RUN sed -i "s/change-this/`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`/g" /opt/mailsac/config/default.json
 RUN sed -i "s/\"normal_smtp_opts\": {/\"normal_smtp_opts\": {\n        \"disableDNSValidation\": true,/g" /opt/mailsac/config/default.json
